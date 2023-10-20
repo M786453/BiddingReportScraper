@@ -15,7 +15,7 @@ class EPScraper:
 
         options.add_argument("--headless") # Make browser headless
         
-        self.driver = webdriver.Edge(options=options) # Initializing Microsoft's Edge Webdriver
+        self.driver = webdriver.Chrome(options=options) # Initializing Microsoft's Edge Webdriver
 
         self.data = {
                     "Trustee": [],
