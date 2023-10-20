@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import PyPDF2
 import re
 from FileManager import write_data_into_excel, create_output_dir
+from Logger import log
+import tabula
+import pandas as pd
+
 
 class SLScraper:
 
@@ -69,8 +73,8 @@ class SLScraper:
 
             with open(file_name, "wb") as out:
 
-                out.write(response.content)
-            
+                out.write(response.content)     
+
 
 
     def update_data(self, record, county):
@@ -100,56 +104,64 @@ class SLScraper:
                     record = list()
                     
                     for line_no in range(len(page_lines)):
+
+                        try:
                         
-                        line_parts = page_lines[line_no].split(" ")
+                            line_parts = page_lines[line_no].split(" ")
 
-                        if line_no == 0: # There is county at first line_no of every page
-                            county = page_lines[line_no]
+                            if line_no == 0: # There is county at first line_no of every page
+                                county = page_lines[line_no]
 
-                        if len(line_parts) > 1:
+                            if len(line_parts) > 1:
 
-                            if "/" not in line_parts[0]:
+                                if "/" not in line_parts[0]:
 
-                                if re.match('\d', page_lines[line_no].split(" ")[0]): # Check whether the line is property address or not, this will help to identify the start of new record
+                                    if re.match('\d', page_lines[line_no].split(" ")[0]): # Check whether the line is property address or not, this will help to identify the start of new record
 
-                                    if len(record) > 0:
-                                        current_record = record
-                                        if re.match('\D', current_record[-1]):
-                                                current_record = current_record[:-1] # Removing heading from record, as it is the heading of next new record. The heading of current record is added first.
+                                        if len(record) > 0:
+                                            current_record = record
+                                            if re.match('\D', current_record[-1]):
+                                                    current_record = current_record[:-1] # Removing heading from record, as it is the heading of next new record. The heading of current record is added first.
 
-                                        if len(current_record) > 0 and len(current_record) < 10: # If there are less no of columns in record than 10, it means a column is missing
+                                            if len(current_record) > 0 and len(current_record) < 10: # If there are less no of columns in record than 10, it means a column is missing
+                                                
+                                                    if "/" in current_record[5]:
+                                                        current_record.insert(8, "")
+                                                    else:
+                                                        current_record.insert(5, "")
+                                                
                                             
-                                            if "/" in current_record[5]:
-                                                current_record.insert(8, "")
-                                            else:
-                                                current_record.insert(5, "")
-                                        
-                                        if line_no != 1: # If this is line_no 1, then it is not a record
-                                            self.update_data(current_record, county)
-                                            
+                                            if line_no != 1: # If this is line_no 1, then it is not a record
 
-                                    # Check whether current line is record heading (county) or not
-                                    if re.match('\D', record[-1]):
-                                        county = record[-1]
-                                        
-                                    record = list() # clear the record list for new record
+                                                self.update_data(current_record, county)
+                                                
+                                                    
+
+                                        # Check whether current line is record heading (county) or not
+                                        if re.match('\D', record[-1]):
+                                            county = record[-1]
+                                            
+                                        record = list() # clear the record list for new record
+                                    
+                            elif line_no == len(page_lines) - 1:
                                 
-                        elif line_no == len(page_lines) - 1:
-                            
-                            if len(record) < 10: # If there are less no of columns in record than 10, then it means Continued Date/Time column missing, add empty string in place of it
+                                if len(record) < 10: # If there are less no of columns in record than 10, then it means Continued Date/Time column missing, add empty string in place of it
+                                    
+                                    if "/" in record[5]:
+                                        record.insert(8, "")
+                                    else:
+                                        record.insert(5, "")
                                 
-                                if "/" in record[5]:
-                                    record.insert(8, "")
-                                else:
-                                    record.insert(5, "")
+                                # For last line, update record
+                                record.append(page_lines[line_no])
+
+                                #Update data
+                                self.update_data(record, county)
                             
-                            # For last line, update record
+                                    
+                            
                             record.append(page_lines[line_no])
+                        except Exception as e:
 
-                            #Update data
-                            self.update_data(record, county)
-                        
-                                   
-                        
-                        record.append(page_lines[line_no])
+                            log("SLScraper: " + page_lines[line_no] + " " + str(e))
             
