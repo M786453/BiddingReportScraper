@@ -46,33 +46,33 @@ def sl_scraper():
 def scraping():
     try:
         ATScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("ATScraper:", e)
 
     try:
         CTScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("CTScraper:", e)
 
     try:
         EPScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("EPScraper:", e)
 
     try:
         LOGScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("LOGScraper:", e)
 
     try:
         MSScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("MSScraper:", e)
 
     try:
         SLScraper().scrape()
-    except:
-        pass
+    except Exception as e:
+        print("SLScraper:",e)
 
 def scraping_thread():
 
