@@ -16,7 +16,15 @@ Workflow of deploying project on server:
 8. Install google-chrome on linux
     cmd: sudo dpkg -i filename.deb
 
-9. Configure Firewall in order to respond to incomming requests for the application:
+9.  To run a Flask app on a public IP directly from Flask itself:
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
+
+In the app.run() method, set the host parameter to '0.0.0.0' to bind the Flask app to all available network interfaces, making it accessible via the public IP address of the machine.
+
+
+10. Configure Firewall in order to respond to incomming requests for the application:
 
         1. Check the status of the firewalld service to ensure it's active:
             sudo systemctl status firewalld
@@ -39,7 +47,7 @@ Workflow of deploying project on server:
         8. To view the active rules for a specific zone, use:
             sudo firewall-cmd --zone=public --list-all
 
-10. To run a Flask application continuously even after closing the SSH connection, you can use tools like nohup and tmux. Here's an example of how you can achieve that:
+11. To run a Flask application continuously even after closing the SSH connection, you can use tools like nohup and tmux. Here's an example of how you can achieve that:
 
         Connect to your server via SSH.
 
