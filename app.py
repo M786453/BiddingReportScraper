@@ -8,6 +8,8 @@ from SLScraper  import SLScraper
 import schedule
 from threading import Thread
 import time
+from Logger import log
+
 
 app = Flask(__name__)
 
@@ -47,32 +49,32 @@ def scraping():
     try:
         ATScraper().scrape()
     except Exception as e:
-        print("ATScraper:", e)
+        log("ATScraper:" + str(e))
 
     try:
         CTScraper().scrape()
     except Exception as e:
-        print("CTScraper:", e)
+        log("CTScraper:" + str(e))
 
     try:
         EPScraper().scrape()
     except Exception as e:
-        print("EPScraper:", e)
+        log("EPScraper:" +  str(e))
 
     try:
         LOGScraper().scrape()
     except Exception as e:
-        print("LOGScraper:", e)
+        log("LOGScraper:" + str(e))
 
     try:
         MSScraper().scrape()
     except Exception as e:
-        print("MSScraper:", e)
+        log("MSScraper:" + str(e))
 
     try:
         SLScraper().scrape()
     except Exception as e:
-        print("SLScraper:",e)
+        log("SLScraper:" + str(e))
 
 def scraping_thread():
 
