@@ -1,0 +1,58 @@
+Workflow of deploying project on server:
+
+1. Make zip file of project
+2. Transfer zip file on server
+3. extract zip file on server
+    cmd: unzip project_zip_file_name.zip
+4. create virtual environment on server
+    cmd: python3 -m venv env
+5. Activate virtual environment
+    cmd: source env/bin/ativate 
+6. Install all requirements of projects from "requirements.txt" file
+    cmd: pip install -r requirements.txt
+    Note: tabule-py==2.8.1 (this version is being used)
+7. Download google-chrome for linux 
+    link: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+8. Install google-chrome on linux
+    cmd: sudo dpkg -i filename.deb
+
+9. Configure Firewall in order to respond to incomming requests for the application:
+
+        1. Check the status of the firewalld service to ensure it's active:
+            sudo systemctl status firewalld
+        2. If it's not active, you can start it by running:
+            sudo systemctl start firewalld
+        3. List the available firewall zones:
+            sudo firewall-cmd --get-zones
+        The zones define the level of trust for network connections.
+
+        4. Set the appropriate zone for your network interface. The default zone is usually public. You can check the active zones using:
+            sudo firewall-cmd --get-active-zones
+        5. Allow incoming traffic for a specific port. For example, to allow incoming HTTP (port 80) traffic, use the following command:
+            sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+        The --permanent option makes the rule persistent across firewall reloads.
+
+        6. If you need to allow traffic for a specific service, you can use the service name instead of the port number. For example, to allow SSH traffic:
+            sudo firewall-cmd --zone=public --add-service=ssh --permanent
+        7. After making changes, reload the firewall for the new rules to take effect:
+            sudo firewall-cmd --reload
+        8. To view the active rules for a specific zone, use:
+            sudo firewall-cmd --zone=public --list-all
+
+10. To run a Flask application continuously even after closing the SSH connection, you can use tools like nohup and tmux. Here's an example of how you can achieve that:
+
+        Connect to your server via SSH.
+
+        Start a new tmux session by running the following command:
+        tmux new-session -s myflaskapp
+        This creates a new tmux session with the name "myflaskapp".
+
+        Inside the tmux session, navigate to the directory where your Flask application code is located.
+
+        Activate your virtual environment, if you are using one.
+
+        Run your Flask application using nohup and redirecting the output to a log file:
+        nohup python app.py > myflaskapp.log &
+        This command starts the Flask application as a background process and redirects the output to the myflaskapp.log file. The & at the end runs the process in the background.
+        NOTE: For running the application, i should have webdriver in the PATH directory of system
+        Detach from the tmux session by pressing Ctrl + B, followed by D. This will return you to the regular shell without terminating the running Flask application.
