@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 import time
 import json
 from FileManager import write_data_into_excel, create_output_dir
-from selenium.webdriver.edge.options import Options
+from selenium.webdriver.chrome.options import Options
 
 class EPScraper:
 
