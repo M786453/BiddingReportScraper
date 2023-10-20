@@ -12,7 +12,7 @@ class EPScraper:
         self.EP_BASE_URL = "https://www.eastplainscorporation.com/foreclosure-listings"
 
         options = Options()
-
+        options.add_argument("--no-sandbox")
         options.add_argument("--headless") # Make browser headless
         
         self.driver = webdriver.Chrome(options=options) # Initializing Microsoft's Edge Webdriver

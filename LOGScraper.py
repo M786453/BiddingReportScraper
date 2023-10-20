@@ -27,7 +27,7 @@ class LOGScraper:
         self.data_keys = ["County", "Sale Date", "Sale Time", "Case", "Address", "City", "Opening Bid","Auction Company", "Sale Status", "Foreclosure Status"]
         
         options = Options()
-
+        options.add_argument("--no-sandbox")
         options.add_argument("--headless") # Make browser headless
         
         self.driver = webdriver.Chrome(options=options) # Initializing Microsoft's Edge Webdriver
