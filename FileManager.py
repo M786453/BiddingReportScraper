@@ -1,11 +1,9 @@
-import pandas as pd
 import os
+import json
 
 def write_data_into_excel(filename,data):
-            df = pd.DataFrame(data)
-            writer = pd.ExcelWriter(filename + '.xlsx', engine='xlsxwriter')
-            df.to_excel(writer, sheet_name='Sheet1', index=False)
-            writer._save()
+            with open(filename + ".json", "w") as df:
+                  df.write(json.dumps(data))
 
 def create_output_dir(bot_name):
     
