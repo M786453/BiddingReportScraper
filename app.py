@@ -38,7 +38,7 @@ def log_scraper():
 @app.route('/ms')
 def ms_scraper():
 
-    return send_file('output/MS-Scraper-Output/output.json')
+    return send_file('output/MS-Scraper-Output/MS.json')
 
 @app.route('/sl')
 def sl_scraper():

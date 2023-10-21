@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-from FileManager import write_data_into_excel, create_output_dir
+from FileManager import write_data_into_json, create_output_dir
 
 class CTScraper:
 
@@ -46,7 +46,7 @@ class CTScraper:
                 self.data[self.data_keys[c_index]].append(cols[c_index].text.strip().replace('\xa0',' '))
         
         # Writing data into excel
-        write_data_into_excel("output/" + self.output_directory_name + "/ct_data", self.data) 
+        write_data_into_json("output/" + self.output_directory_name + "/ct_data", self.data) 
 
         return "output/" + self.output_directory_name + "/ct_data.xlsx"
 

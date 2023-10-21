@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import PyPDF2
 import re
-from FileManager import write_data_into_excel, create_output_dir
+from FileManager import write_data_into_json, create_output_dir
 from Logger import log
 import tabula
 import pandas as pd
@@ -55,7 +55,7 @@ class SLScraper:
             
             self.read_pdfs(filename)
         
-        write_data_into_excel("output/" + self.output_directory_name + '/sl_data',self.data)
+        write_data_into_json("output/" + self.output_directory_name + '/sl_data',self.data)
 
         return "output/" + self.output_directory_name + '/sl_data.xlsx'
         

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-from FileManager import write_data_into_excel, create_output_dir
+from FileManager import write_data_into_json, create_output_dir
 
 class ATScraper:
 
@@ -54,6 +54,6 @@ class ATScraper:
 
                 self.data[key_1].append(row.find('td', {'class': key_2}).text)
             
-        write_data_into_excel("output/" + self.output_directory_name + "/at_data", self.data)
+        write_data_into_json("output/" + self.output_directory_name + "/at_data", self.data)
 
         return "output/" + self.output_directory_name + "/at_data.xlsx"

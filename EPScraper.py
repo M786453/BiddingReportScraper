@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 import json
-from FileManager import write_data_into_excel, create_output_dir
+from FileManager import write_data_into_json, create_output_dir
 from selenium.webdriver.chrome.options import Options
 
 class EPScraper:
@@ -59,7 +59,7 @@ class EPScraper:
 
                 self.data[self.data_keys[c_index]].append(cols[c_index].text)    
 
-        write_data_into_excel("output/" + self.output_directory_name + "/ep_data", self.data)
+        write_data_into_json("output/" + self.output_directory_name + "/ep_data", self.data)
 
         return "output/" + self.output_directory_name + "/ep_data.xlsx"
         

@@ -1,7 +1,7 @@
 import os
 import json
 
-def write_data_into_excel(filename,data):
+def write_data_into_json(filename,data):
             with open(filename + ".json", "w") as df:
                   df.write(json.dumps(data))
 
