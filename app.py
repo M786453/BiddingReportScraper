@@ -16,34 +16,34 @@ app = Flask(__name__)
 @app.route('/at')
 def at_scraper():
     
-    return send_file("output/AT-Scraper-Output/at_data.xlsx")
+    return send_file("output/AT-Scraper-Output/at_data.json")
 
 @app.route('/ct')
 def ct_scraper():
 
-    return send_file("output/CT-Scraper-Output/ct_data.xlsx")
+    return send_file("output/CT-Scraper-Output/ct_data.json")
 
 
 @app.route('/ep')
 def ep_scraper():
 
-    return send_file("output/EP-Scraper-Output/ep_data.xlsx")
+    return send_file("output/EP-Scraper-Output/ep_data.json")
 
 
 @app.route('/log')
 def log_scraper():
 
-    return send_file("output/LOG-Scraper-Output/log_data.xlsx")
+    return send_file("output/LOG-Scraper-Output/log_data.json")
 
 @app.route('/ms')
 def ms_scraper():
 
-    return send_file('output/MS-Scraper-Output/output.xlsx')
+    return send_file('output/MS-Scraper-Output/output.json')
 
 @app.route('/sl')
 def sl_scraper():
 
-    return send_file('output/SL-Scraper-Output/sl_data.xlsx')
+    return send_file('output/SL-Scraper-Output/sl_data.json')
 
 def scraping():
     try:
@@ -90,4 +90,4 @@ schedule.every().day.at("01:00").do(scraping_thread) # Run everyday at 1:00AM
 if __name__ == "__main__":
     Thread(target=scraping_thread).start()
     Thread(target=schedule_script).start()
-    app.run()
+    app.run("0.0.0.0",port=80)
