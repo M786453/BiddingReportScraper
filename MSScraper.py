@@ -62,32 +62,23 @@ class MSScraper:
 
         
         for category in data:
-            print("Before:", len(data[category]))
+
+            cleaned_values = list()
+
             for val in data[category]:
+
                 try:
-                    if val == category:
-                        while val in data[category]:
-                            index = data[category].index(val)
-                            del data[category][index]
+                    if val != category and val != "Property Address":
         
-                    if "Sale Date" == category and val != None and "/" not in val:
-                        index = data[category].index(val)
-                        data[category][index] = ""
+                        if ("Sale Date" == category or "Continued" == category) and val != None and "/" not in val:
+                            val = ""
 
-
-                    if category == "Continued" and val != None:
-                        index = data[category].index(val)
-                        if "Property Address" == val:
-                            del data[category][index]
-                        elif "/" not in val:
-                            data[category][index] = ""
+                        cleaned_values.append(val)
                         
                 except Exception as e:
-                    print("MSScraper:", e) 
-            print("After:", len(data[category]))           
+                    print("Below MSScraper:", e)  
 
-                
-            
+            data[category] = list(cleaned_values)     
 
         write_data_into_json("output/" + self.output_directory_name +  '/MS',data)
 
