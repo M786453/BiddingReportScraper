@@ -19,7 +19,7 @@ class EPScraper:
 
         self.data = list()
         
-        self.data_keys = ["Sale Date", "Sale Time", "File Name", "Property Address", "City", "Opening Bid"]
+        self.data_keys = ["Sale Date", "Sale Time", "Unique Document Number", "Property Address", "City", "Opening Bid"]
 
         self.output_directory_name = "EP-Scraper-Output"
 
@@ -45,7 +45,7 @@ class EPScraper:
                     "Trustee": "",
                     "Sale Date": "",
                     "Sale Time": "",
-                    "File Name": "",
+                    "Unique Document Number": "",
                     "Property Address": "",
                     "City": "",
                     "Opening Bid": ""
