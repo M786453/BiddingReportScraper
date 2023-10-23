@@ -66,25 +66,29 @@ class SLScraper:
 
     def update_data(self, record, county):
         row_dict = {
-                    "Trustee": [],
-                    "Sale Date": [],
-                    "Sale Time": [],
-                    "Continued Date/Time":[],
-                    "County": [],
-                    "Civil Case No.": [],
-                    "Firm File#": [],
-                    "Opening Bid": [],
-                    "Property Address": [],
-                    "Property City": [],
-                    "Property Zip": [],
-                    "Sale Location":[]
+                    "Trustee": "",
+                    "Sale Date": "",
+                    "Sale Time": "",
+                    "Continued Date/Time":"",
+                    "County": "",
+                    "Civil Case No.": "",
+                    "Unique Document Number": "",
+                    "Opening Bid": "",
+                    "Property Address": "",
+                    "Property City": "",
+                    "Property Zip": "",
+                    "Sale Location":""
                     }
         row_dict["Trustee"] = "SOUTHLAW"
         row_dict["County"] = county
         for c_index in range(len(self.keys)):
-            row_dict[self.keys[c_index]] = record[c_index]
+            if self.keys[c_index] == "Firm File#":
+                row_dict["Unique Document Number"] = record[c_index]
+            else:
+                row_dict[self.keys[c_index]] = record[c_index]
 
-        self.data.append(row_dict)
+        if len(row_dict["Unique Document Number"]) != 0:
+            self.data.append(row_dict)
 
 
     def read_pdfs(self, filename):
