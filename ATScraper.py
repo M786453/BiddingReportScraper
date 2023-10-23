@@ -57,7 +57,8 @@ class ATScraper:
 
                 row_dict[key_1] = row.find('td', {'class': key_2}).text
             
-            self.data.append(row_dict)
+            if len(row_dict["Unique Document Number"]) != 0:
+                self.data.append(row_dict)
             
         write_data_into_json("output/" + self.output_directory_name + "/at_data", self.data)
 
