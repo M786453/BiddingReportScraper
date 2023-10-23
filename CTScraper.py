@@ -11,7 +11,7 @@ class CTScraper:
 
         self.data = list()
         
-        self.data_keys = ["Sale Date", "Sale Time", "County", "File Number", "Address", "Opening Bid", "Comments"]
+        self.data_keys = ["Sale Date", "Sale Time", "County", "Unique Document Number", "Address", "Opening Bid", "Comments"]
 
         self.output_directory_name = "CT-Scraper-Output"
 
@@ -34,7 +34,7 @@ class CTScraper:
                     "Sale Date": "",
                     "Sale Time": "",
                     "County": "",
-                    "File Number": "",
+                    "Unique Document Number": "",
                     "Address": "",
                     "Opening Bid": "",
                     "Comments": ""
