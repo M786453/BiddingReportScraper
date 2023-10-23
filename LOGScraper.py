@@ -12,7 +12,7 @@ class LOGScraper:
 
         self.data = list()
         
-        self.data_keys = ["County", "Sale Date", "Sale Time", "Case", "Address", "City", "Opening Bid","Auction Company", "Sale Status", "Foreclosure Status"]
+        self.data_keys = ["County", "Sale Date", "Sale Time", "Unique Document Number", "Address", "City", "Opening Bid","Auction Company", "Sale Status", "Foreclosure Status"]
         
         options = Options()
         options.add_argument("--no-sandbox")
@@ -48,7 +48,7 @@ class LOGScraper:
                     "Trustee": "",
                     "Sale Date": "",
                     "Sale Time": "",
-                    "Case": "",
+                    "Unique Document Number": "",
                     "Address": "",
                     "City": "",
                     "County": "",
