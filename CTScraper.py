@@ -9,16 +9,7 @@ class CTScraper:
 
         self.CT_URL = "https://www.centretrustee.com/listproperties.php"
 
-        self.data = {
-                    "Trustee": [],
-                    "Sale Date": [],
-                    "Sale Time": [],
-                    "County": [],
-                    "File Number": [],
-                    "Address": [],
-                    "Opening Bid": [],
-                    "Comments": []
-                    }
+        self.data = list()
         
         self.data_keys = ["Sale Date", "Sale Time", "County", "File Number", "Address", "Opening Bid", "Comments"]
 
@@ -38,13 +29,25 @@ class CTScraper:
 
         for row in table_rows:
 
-            self.data["Trustee"].append("CENTRE TRUSTEE CORP")
+            row_dict = {
+                    "Trustee": "",
+                    "Sale Date": "",
+                    "Sale Time": "",
+                    "County": "",
+                    "File Number": "",
+                    "Address": "",
+                    "Opening Bid": "",
+                    "Comments": ""
+                    }
+
+            row_dict["Trustee"] = "CENTRE TRUSTEE CORP"
 
             cols = row.find_all('td')
 
             for c_index in range(len(cols)):
-                self.data[self.data_keys[c_index]].append(cols[c_index].text.strip().replace('\xa0',' '))
+                row_dict[self.data_keys[c_index]] = cols[c_index].text.strip().replace('\xa0',' ')
         
+            self.data.append(row_dict)
         # Writing data into excel
         write_data_into_json("output/" + self.output_directory_name + "/ct_data", self.data) 
 
