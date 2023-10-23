@@ -10,19 +10,7 @@ class LOGScraper:
 
     def __init__(self):
 
-        self.data = {
-                    "Trustee": [],
-                    "Sale Date": [],
-                    "Sale Time": [],
-                    "Case": [],
-                    "Address": [],
-                    "City": [],
-                    "County": [],
-                    "Opening Bid": [],
-                    "Auction Company":[],
-                    "Sale Status": [],
-                    "Foreclosure Status": []
-                    }
+        self.data = list()
         
         self.data_keys = ["County", "Sale Date", "Sale Time", "Case", "Address", "City", "Opening Bid","Auction Company", "Sale Status", "Foreclosure Status"]
         
@@ -56,13 +44,29 @@ class LOGScraper:
 
         for row in table_rows:
 
-            self.data["Trustee"].append("LOGS.COM")
+            row_dict = {
+                    "Trustee": "",
+                    "Sale Date": "",
+                    "Sale Time": "",
+                    "Case": "",
+                    "Address": "",
+                    "City": "",
+                    "County": "",
+                    "Opening Bid": "",
+                    "Auction Company":"",
+                    "Sale Status": "",
+                    "Foreclosure Status": ""
+                    }
+
+            row_dict["Trustee"] = "LOGS.COM"
 
             record_cols = list(row.find_elements(By.XPATH, ".//div[@role='gridcell']"))[1:]
 
             for col_index in range(len(record_cols)):
 
-                self.data[self.data_keys[col_index]].append(record_cols[col_index].text)
+                row_dict[self.data_keys[col_index]] = record_cols[col_index].text
+            
+            self.data.append(row_dict)
 
         write_data_into_json("output/" + self.output_directory_name + "/log_data", self.data)
 
