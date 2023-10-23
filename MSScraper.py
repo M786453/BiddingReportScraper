@@ -37,6 +37,8 @@ class MSScraper:
         # Loop through all pages of the PDF and convert them to Excel sheets
         pages = tabula.read_pdf(pdf_file, pages='all')
 
+        categories = list()
+
         for i, df in enumerate(pages):
 
             local_data = dict(df.to_dict())
@@ -46,6 +48,7 @@ class MSScraper:
                 for category in local_data:
                     try:
                         data[category] = [local_data[category][key] if type(local_data[category][key]) != type(float()) else "" for key in local_data[category]]
+                        categories.append(category)
                     except Exception as e:
                         print("MSScraper:", e)    
             else:
@@ -78,7 +81,26 @@ class MSScraper:
                 except Exception as e:
                     print("Below MSScraper:", e)  
 
-            data[category] = list(cleaned_values)     
+            data[category] = list(cleaned_values)
 
-        write_data_into_json("output/" + self.output_directory_name +  '/MS',data)
+            # format output data
+            formatted_data = list()
+            max_length = max([len(data[cat]) for cat in data])
+
+            for index in range(max_length):
+                row_dict = dict()
+                row_dict["Trustee"] = "MS Firm"
+
+                for cat in categories:
+
+                    try:
+                        row_dict[cat] = data[cat][index]
+                    except:
+                        row_dict[cat] = ""
+                
+                formatted_data.append(row_dict)
+
+            
+
+        write_data_into_json("output/" + self.output_directory_name +  '/MS',formatted_data)
 
