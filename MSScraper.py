@@ -92,7 +92,8 @@ class MSScraper:
                 row_dict["Trustee"] = "MS Firm"
 
                 for cat in categories:
-
+                    if cat == "MS File #":
+                        cat = "Unique Document Number"
                     try:
                         row_dict[cat] = data[cat][index]
                     except:
