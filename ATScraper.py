@@ -15,7 +15,7 @@ class ATScraper:
                         "Sale Date":"col-date", 
                         "Sale Time":"col-time", 
                         "Name":"col-name",
-                        "Case":"col-case", 
+                        "Unique Document Number":"col-case", 
                         "Property Address":"col-address", 
                         "City":"col-city",
                         "County":"col-county",
@@ -43,7 +43,7 @@ class ATScraper:
                     "Sale Date": "",
                     "Sale Time": "",
                     "Name": "",
-                    "Case": "",
+                    "Unique Document Number": "",
                     "Property Address": "",
                     "City": "",
                     "County": "",
@@ -53,6 +53,7 @@ class ATScraper:
             row_dict["Trustee"] = "AT, INC"
 
             for key_1,key_2 in self.data_keys.items():
+                
 
                 row_dict[key_1] = row.find('td', {'class': key_2}).text
             
