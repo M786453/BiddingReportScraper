@@ -92,12 +92,15 @@ class MSScraper:
                 row_dict["Trustee"] = "MS Firm"
 
                 for cat in categories:
-                    if cat == "MS File #":
-                        cat = "Unique Document Number"
+                    
                     try:
-                        row_dict[cat] = data[cat][index]
+                        if cat == "MS File #":
+                            row_dict["Unique Document Number"] = data[cat][index]
+                        else:
+                            row_dict[cat] = data[cat][index]
                     except:
                         row_dict[cat] = ""
+
                 if len(row_dict["Unique Document Number"]) != 0:
                     formatted_data.append(row_dict)
 
