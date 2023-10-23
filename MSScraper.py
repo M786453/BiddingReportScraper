@@ -99,7 +99,7 @@ class MSScraper:
                         else:
                             row_dict[cat] = data[cat][index]
                     except:
-                        row_dict[cat] = ""
+                        row_dict["Unique Document Number"] = ""
 
                 if len(row_dict["Unique Document Number"]) != 0:
                     formatted_data.append(row_dict)
