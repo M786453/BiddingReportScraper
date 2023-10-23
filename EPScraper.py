@@ -17,15 +17,7 @@ class EPScraper:
         
         self.driver = webdriver.Chrome(options=options) # Initializing Microsoft's Edge Webdriver
 
-        self.data = {
-                    "Trustee": [],
-                    "Sale Date": [],
-                    "Sale Time": [],
-                    "File Name": [],
-                    "Property Address": [],
-                    "City": [],
-                    "Opening Bid": []
-                    }
+        self.data = list()
         
         self.data_keys = ["Sale Date", "Sale Time", "File Name", "Property Address", "City", "Opening Bid"]
 
@@ -49,7 +41,17 @@ class EPScraper:
 
         for row in table_rows:
 
-            self.data["Trustee"].append("EastPlains")
+            row_dict = {
+                    "Trustee": "",
+                    "Sale Date": "",
+                    "Sale Time": "",
+                    "File Name": "",
+                    "Property Address": "",
+                    "City": "",
+                    "Opening Bid": ""
+                    }
+
+            row_dict["Trustee"] = "EastPlains"
 
             cols = list(row.find_elements(By.TAG_NAME, 'td'))[:-1]
 
@@ -57,7 +59,9 @@ class EPScraper:
             
             for c_index in range(len(cols)):
 
-                self.data[self.data_keys[c_index]].append(cols[c_index].text)    
+                row_dict[self.data_keys[c_index]] = cols[c_index].text
+
+            self.data.append(row_dict)
 
         write_data_into_json("output/" + self.output_directory_name + "/ep_data", self.data)
 
