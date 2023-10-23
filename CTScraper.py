@@ -46,8 +46,9 @@ class CTScraper:
 
             for c_index in range(len(cols)):
                 row_dict[self.data_keys[c_index]] = cols[c_index].text.strip().replace('\xa0',' ')
-        
-            self.data.append(row_dict)
+
+            if len(row_dict["Unique Document Number"]) != 0:
+                self.data.append(row_dict)
         # Writing data into excel
         write_data_into_json("output/" + self.output_directory_name + "/ct_data", self.data) 
 

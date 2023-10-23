@@ -61,7 +61,8 @@ class EPScraper:
 
                 row_dict[self.data_keys[c_index]] = cols[c_index].text
 
-            self.data.append(row_dict)
+            if len(row_dict["Unique Document Number"]) != 0:
+                self.data.append(row_dict)
 
         write_data_into_json("output/" + self.output_directory_name + "/ep_data", self.data)
 
