@@ -9,17 +9,7 @@ class ATScraper:
         
         self.AT_UPCOMMING_SALES_URL = "https://www.armstrongteasdale.com/upcoming-sales/"
 
-        self.data = {
-                    "Trustee": [],
-                    "Sale Date": [],
-                    "Sale Time": [],
-                    "Name": [],
-                    "Case": [],
-                    "Property Address": [],
-                    "City": [],
-                    "County": [],
-                    "Bid Amount": []
-                    }
+        self.data = list()
         
         self.data_keys = {
                         "Sale Date":"col-date", 
@@ -48,11 +38,25 @@ class ATScraper:
 
         for row in table_rows:
 
-            self.data["Trustee"].append("AT, INC")
+            row_dict = {
+                    "Trustee": "",
+                    "Sale Date": "",
+                    "Sale Time": "",
+                    "Name": "",
+                    "Case": "",
+                    "Property Address": "",
+                    "City": "",
+                    "County": "",
+                    "Bid Amount": ""
+                    }
+
+            row_dict["Trustee"] = "AT, INC"
 
             for key_1,key_2 in self.data_keys.items():
 
-                self.data[key_1].append(row.find('td', {'class': key_2}).text)
+                row_dict[key_1] = row.find('td', {'class': key_2}).text
+            
+            self.data.append(row_dict)
             
         write_data_into_json("output/" + self.output_directory_name + "/at_data", self.data)
 
