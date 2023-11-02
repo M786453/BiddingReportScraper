@@ -12,14 +12,14 @@ class ATScraper:
         self.data = list()
         
         self.data_keys = {
-                        "Sale Date":"col-date", 
-                        "Sale Time":"col-time", 
-                        "Name":"col-name",
-                        "Unique Document Number":"col-case", 
-                        "Property Address":"col-address", 
-                        "City":"col-city",
+                        "Sale_date":"col-date", 
+                        "Sale_time":"col-time", 
+                        "Borrower_1_last":"col-name",
+                        "FileNo":"col-case", 
+                        "PropAddress":"col-address", 
+                        "PropCity":"col-city",
                         "County":"col-county",
-                        "Bid Amount": "col-bid"
+                        "OpeningBid": "col-bid"
                         }
         
         self.output_directory_name = "AT-Scraper-Output"
@@ -40,14 +40,15 @@ class ATScraper:
 
             row_dict = {
                     "Trustee": "",
-                    "Sale Date": "",
-                    "Sale Time": "",
-                    "Name": "",
-                    "Unique Document Number": "",
-                    "Property Address": "",
-                    "City": "",
+                    "Sale_date": "",
+                    "Sale_time": "",
+                    "Borrower_1_last": "",
+                    "FileNo": "",
+                    "PropAddress": "",
+                    "PropCity": "",
+                    "PropZip":"",
                     "County": "",
-                    "Bid Amount": ""
+                    "OpeningBid": ""
                     }
 
             row_dict["Trustee"] = "AT, INC"
@@ -57,7 +58,7 @@ class ATScraper:
 
                 row_dict[key_1] = row.find('td', {'class': key_2}).text
             
-            if len(row_dict["Unique Document Number"]) != 0:
+            if len(row_dict["FileNo"]) != 0:
                 self.data.append(row_dict)
             
         write_data_into_json("output/" + self.output_directory_name + "/at_data", self.data)

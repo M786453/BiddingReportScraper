@@ -19,7 +19,7 @@ class EPScraper:
 
         self.data = list()
         
-        self.data_keys = ["Sale Date", "Sale Time", "Unique Document Number", "Property Address", "City", "Opening Bid"]
+        self.data_keys = ["Sale_date", "Sale_time", "FileNo", "PropAddress", "PropCity", "OpeningBid"]
 
         self.output_directory_name = "EP-Scraper-Output"
 
@@ -43,12 +43,14 @@ class EPScraper:
 
             row_dict = {
                     "Trustee": "",
-                    "Sale Date": "",
-                    "Sale Time": "",
-                    "Unique Document Number": "",
-                    "Property Address": "",
-                    "City": "",
-                    "Opening Bid": ""
+                    "Sale_date": "",
+                    "Sale_time": "",
+                    "County": "",
+                    "FileNo": "",
+                    "PropAddress": "",
+                    "PropCity": "",
+                    "PropZip":"",
+                    "OpeningBid": ""
                     }
 
             row_dict["Trustee"] = "EastPlains"
@@ -61,7 +63,7 @@ class EPScraper:
 
                 row_dict[self.data_keys[c_index]] = cols[c_index].text
 
-            if len(row_dict["Unique Document Number"]) != 0:
+            if len(row_dict["FileNo"]) != 0:
                 self.data.append(row_dict)
 
         write_data_into_json("output/" + self.output_directory_name + "/ep_data", self.data)

@@ -47,6 +47,7 @@ class MSScraper:
                 
                 for category in local_data:
                     try:
+                        
                         data[category] = [local_data[category][key] if type(local_data[category][key]) != type(float()) else "" for key in local_data[category]]
                         categories.append(category)
                     except Exception as e:
@@ -90,18 +91,32 @@ class MSScraper:
             for index in range(max_length):
                 row_dict = dict()
                 row_dict["Trustee"] = "MS Firm"
+                row_dict["PropAddress"] = ""
+                row_dict["PropCity"] = ""
+                row_dict["PropZip"] = ""
 
                 for cat in categories:
                     
                     try:
-                        if cat == "MS File #":
-                            row_dict["Unique Document Number"] = data[cat][index]
+                        if cat == "Auction Vendor":
+                            row_dict["vendor"] = data[cat][index]
+                        elif cat == "Continued":
+                            row_dict["continued_date"] = data[cat][index]
+                        elif cat == "Bid":
+                            row_dict["OpeningBid"] = data[cat][index]
+                        elif cat == "Sale Date":
+                            s_date = data[cat][index].split(" ")[0]
+                            s_time = data[cat][index].split(" ")[1]
+                            row_dict["Sale_date"] = s_date
+                            row_dict["Sale_time"] = s_time
+                        elif cat == "MS File #":
+                            row_dict["FileNo"] = data[cat][index]
                         else:
                             row_dict[cat] = data[cat][index]
                     except:
-                        row_dict["Unique Document Number"] = ""
+                        row_dict["FileNo"] = ""
 
-                if len(row_dict["Unique Document Number"]) != 0:
+                if len(row_dict["FileNo"]) != 0:
                     formatted_data.append(row_dict)
 
             

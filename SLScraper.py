@@ -20,7 +20,7 @@ class SLScraper:
 
         self.data = list()
     
-        self.keys = ["Property Address", "Property City", "Property Zip", "Sale Date", "Sale Time", "Continued Date/Time", "Opening Bid", "Sale Location", "Civil Case No.","Firm File#"]
+        self.keys = ["PropAddress", "PropCity", "PropZip", "Sale_date", "Sale_time", "continued_date", "OpeningBid", "Courthouse", "Civil Case No.","Firm File#"]
         
         self.output_directory_name = "SL-Scraper-Output"
 
@@ -67,27 +67,27 @@ class SLScraper:
     def update_data(self, record, county):
         row_dict = {
                     "Trustee": "",
-                    "Sale Date": "",
-                    "Sale Time": "",
-                    "Continued Date/Time":"",
+                    "Sale_date": "",
+                    "Sale_time": "",
+                    "continued_date":"",
                     "County": "",
                     "Civil Case No.": "",
-                    "Unique Document Number": "",
-                    "Opening Bid": "",
-                    "Property Address": "",
-                    "Property City": "",
-                    "Property Zip": "",
-                    "Sale Location":""
+                    "FileNo": "",
+                    "OpeningBid": "",
+                    "PropAddress": "",
+                    "PropCity": "",
+                    "PropZip": "",
+                    "Courthouse":""
                     }
         row_dict["Trustee"] = "SOUTHLAW"
         row_dict["County"] = county
         for c_index in range(len(self.keys)):
             if self.keys[c_index] == "Firm File#":
-                row_dict["Unique Document Number"] = record[c_index]
+                row_dict["FileNo"] = record[c_index]
             else:
                 row_dict[self.keys[c_index]] = record[c_index]
 
-        if len(row_dict["Unique Document Number"]) != 0:
+        if len(row_dict["FileNo"]) != 0:
             self.data.append(row_dict)
 
 

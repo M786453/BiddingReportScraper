@@ -12,7 +12,7 @@ class LOGScraper:
 
         self.data = list()
         
-        self.data_keys = ["County", "Sale Date", "Sale Time", "Unique Document Number", "Address", "City", "Opening Bid","Auction Company", "Sale Status", "Foreclosure Status"]
+        self.data_keys = ["County", "Sale_date", "Sale_time", "FileNo", "PropAddress", "PropCity", "OpeningBid","vendor", "status- DROP DOWN", "Foreclosure Status"]
         
         options = Options()
         options.add_argument("--no-sandbox")
@@ -46,15 +46,16 @@ class LOGScraper:
 
             row_dict = {
                     "Trustee": "",
-                    "Sale Date": "",
-                    "Sale Time": "",
-                    "Unique Document Number": "",
-                    "Address": "",
-                    "City": "",
+                    "Sale_date": "",
+                    "Sale_time": "",
+                    "FileNo": "",
+                    "PropAddress": "",
+                    "PropCity": "",
+                    "PropZip":"",
                     "County": "",
-                    "Opening Bid": "",
-                    "Auction Company":"",
-                    "Sale Status": "",
+                    "OpeningBid": "",
+                    "vendor":"",
+                    "status- DROP DOWN": "",
                     "Foreclosure Status": ""
                     }
 
@@ -66,7 +67,7 @@ class LOGScraper:
 
                 row_dict[self.data_keys[col_index]] = record_cols[col_index].text
             
-            if len(row_dict["Unique Document Number"]) != 0:
+            if len(row_dict["FileNo"]) != 0:
                 self.data.append(row_dict)
 
         write_data_into_json("output/" + self.output_directory_name + "/log_data", self.data)

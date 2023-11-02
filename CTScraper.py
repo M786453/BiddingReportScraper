@@ -11,7 +11,7 @@ class CTScraper:
 
         self.data = list()
         
-        self.data_keys = ["Sale Date", "Sale Time", "County", "Unique Document Number", "Address", "Opening Bid", "Comments"]
+        self.data_keys = ["Sale_date", "Sale_time", "County", "FileNo", "PropAddress", "OpeningBid", "status- DROP DOWN"]
 
         self.output_directory_name = "CT-Scraper-Output"
 
@@ -31,13 +31,15 @@ class CTScraper:
 
             row_dict = {
                     "Trustee": "",
-                    "Sale Date": "",
-                    "Sale Time": "",
+                    "Sale_date": "",
+                    "Sale_time": "",
                     "County": "",
-                    "Unique Document Number": "",
-                    "Address": "",
-                    "Opening Bid": "",
-                    "Comments": ""
+                    "PropCity": "",
+                    "PropZip":"",
+                    "FileNo": "",
+                    "PropAddress": "",
+                    "OpeningBid": "",
+                    "status- DROP DOWN": ""
                     }
 
             row_dict["Trustee"] = "CENTRE TRUSTEE CORP"
@@ -47,7 +49,7 @@ class CTScraper:
             for c_index in range(len(cols)):
                 row_dict[self.data_keys[c_index]] = cols[c_index].text.strip().replace('\xa0',' ')
 
-            if len(row_dict["Unique Document Number"]) != 0:
+            if len(row_dict["FileNo"]) != 0:
                 self.data.append(row_dict)
         # Writing data into excel
         write_data_into_json("output/" + self.output_directory_name + "/ct_data", self.data) 
